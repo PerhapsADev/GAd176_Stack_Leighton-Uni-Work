@@ -16,21 +16,23 @@ public class PhysicsMover : MonoBehaviour
     [SerializeField] private float movementSpeedInUnitsPerSecond = 19f;
     [SerializeField] private GameObject chaseTarget;
     // [SerializeField] private GameObject player;
-   
+
     private void FixedUpdate()
     {
-        if (sphere.velocity.magnitude <= 20)
+        if (isCurrentlyChasing == false)
         {
-            //Input.GetAxis("Vertical") ...W/S
-            //Input.GetAxis("Horizontal") ...A/D
+            if (sphere.velocity.magnitude <= 20)
+            {
+                //Input.GetAxis("Vertical") ...W/S
+                //Input.GetAxis("Horizontal") ...A/D
 
-            // Input.GetAxis gives a movement float of 1.
-            // movementSpeedInUnitsPerSecond (19), Input.GetAxis (1).
-            // Keep in mind to * (times) these, using + or - limits the collab'd speed via which way its going on the axis (forward +, backwards -)
+                // Input.GetAxis gives a movement float of 1.
+                // movementSpeedInUnitsPerSecond (19), Input.GetAxis (1).
+                // Keep in mind to * (times) these, using + or - limits the collab'd speed via which way its going on the axis (forward +, backwards -)
 
-            sphere.AddForce (movementSpeedInUnitsPerSecond * Input.GetAxis("Horizontal"),0, movementSpeedInUnitsPerSecond * Input.GetAxis("Vertical"));
+                sphere.AddForce(movementSpeedInUnitsPerSecond * Input.GetAxis("Horizontal"), 0, movementSpeedInUnitsPerSecond * Input.GetAxis("Vertical"));
+            }
         }
-
         else
         {
             // AI chasing code
@@ -39,11 +41,13 @@ public class PhysicsMover : MonoBehaviour
 
             // Vector math to chase player
             // tartget.position - me.position
-            
+
             if (sphere.velocity.magnitude <= 20)
             {
                 sphere.AddForce(chaseTarget.transform.position - gameObject.transform.position);
-           }
+            }
         }
+
+
     }
 }
